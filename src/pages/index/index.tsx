@@ -5,6 +5,8 @@ import logo from './logo.svg'
 import './styles.css'
 
 export default function Index() {
+  console.log(process.env)
+
   return (
     <div className="App">
       <header className="App-header">

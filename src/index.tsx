@@ -1,9 +1,7 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom'
 
-import Index from 'pages/index'
-import About from 'pages/about'
+import RoutingTable from './routing'
 
 import { store } from './app/store'
 import { Provider } from 'react-redux'
@@ -14,16 +12,7 @@ import './index.css'
 ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>
-      <Router>
-        <Switch>
-          <Route exact path="/">
-            <Index />
-          </Route>
-          <Route path="/about">
-            <About />
-          </Route>
-        </Switch>
-      </Router>
+      <RoutingTable />
     </Provider>
   </React.StrictMode>,
   document.getElementById('root')
