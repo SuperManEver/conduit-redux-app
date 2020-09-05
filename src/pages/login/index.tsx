@@ -2,8 +2,9 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 
 import { ListErrors } from 'components/ListErrors'
+import { Layout } from 'components/Layout'
 
-export default function Login() {
+function Login() {
   const errors = {}
 
   const email = ''
@@ -70,3 +71,9 @@ export default function Login() {
     </div>
   )
 }
+
+export default () => (
+  <Layout>
+    <Login />
+  </Layout>
+)

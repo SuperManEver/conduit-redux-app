@@ -1,10 +1,12 @@
 import React from 'react'
 
 import { Counter } from 'features/counter/Counter'
+import { Layout } from 'components/Layout'
+
 import logo from './logo.svg'
 import './styles.css'
 
-export default function Index() {
+function Index() {
   console.log(process.env)
 
   return (
@@ -57,3 +59,9 @@ export default function Index() {
     </div>
   )
 }
+
+export default () => (
+  <Layout>
+    <Index />
+  </Layout>
+)
