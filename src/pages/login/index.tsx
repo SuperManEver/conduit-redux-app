@@ -1,26 +1,35 @@
-import React from 'react'
+import React, { useCallback } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
+import { Formik } from 'formik'
+import { LoginSchema } from './utils'
+
+import { RootState } from 'app/store'
 
 import { ListErrors } from 'components/ListErrors'
 import { Layout } from 'components/Layout'
 
+import { login, errorsSelector } from './store'
+
+import css from './styles.module.css'
+
+type Values = {
+  email: string
+  password: string
+}
+
 function Login() {
-  const errors = {}
+  const dispatch = useDispatch()
+  const errors = useSelector((state: RootState) => errorsSelector(state))
 
-  const email = ''
-  const password = ''
+  const submitLogin = useCallback(
+    (params: { email: string; password: string }) => dispatch(login(params)),
+    [dispatch]
+  )
 
-  function submitForm(
-    email: string,
-    password: string
-  ): ((event: React.FormEvent<HTMLFormElement>) => void) | undefined {
-    return undefined
+  function onSubmit(values: Values): void {
+    submitLogin(values)
   }
-
-  function changeEmail(evt: React.ChangeEvent<HTMLInputElement>): void {}
-  function changePassword(evt: React.ChangeEvent<HTMLInputElement>): void {}
-
-  const inProgress = false
 
   return (
     <div className="auth-page">
@@ -34,37 +43,56 @@ function Login() {
 
             <ListErrors errors={errors} />
 
-            <form onSubmit={submitForm(email, password)}>
-              <fieldset>
-                <fieldset className="form-group">
-                  <input
-                    className="form-control form-control-lg"
-                    type="email"
-                    placeholder="Email"
-                    value={email}
-                    onChange={changeEmail}
-                  />
-                </fieldset>
+            <Formik
+              initialValues={{ email: '', password: '' }}
+              validationSchema={LoginSchema}
+              onSubmit={onSubmit}
+            >
+              {({ values, errors, handleChange, handleBlur, handleSubmit }) => (
+                <>
+                  <form onSubmit={handleSubmit}>
+                    <fieldset>
+                      <fieldset className="form-group">
+                        <input
+                          className="form-control form-control-lg"
+                          name="email"
+                          type="email"
+                          placeholder="Email"
+                          onChange={handleChange}
+                          onBlur={handleBlur}
+                          value={values.email}
+                        />
+                        {errors.email ? (
+                          <div className={css.error}>{errors.email}</div>
+                        ) : null}
+                      </fieldset>
 
-                <fieldset className="form-group">
-                  <input
-                    className="form-control form-control-lg"
-                    type="password"
-                    placeholder="Password"
-                    value={password}
-                    onChange={changePassword}
-                  />
-                </fieldset>
+                      <fieldset className="form-group">
+                        <input
+                          className="form-control form-control-lg"
+                          name="password"
+                          type="password"
+                          placeholder="Password"
+                          onChange={handleChange}
+                          onBlur={handleBlur}
+                          value={values.password}
+                        />
+                        {errors.password ? (
+                          <div className={css.error}>{errors.password}</div>
+                        ) : null}
+                      </fieldset>
 
-                <button
-                  className="btn btn-lg btn-primary pull-xs-right"
-                  type="submit"
-                  disabled={inProgress}
-                >
-                  Sign in
-                </button>
-              </fieldset>
-            </form>
+                      <button
+                        className="btn btn-lg btn-primary pull-xs-right"
+                        type="submit"
+                      >
+                        Sign in
+                      </button>
+                    </fieldset>
+                  </form>
+                </>
+              )}
+            </Formik>
           </div>
         </div>
       </div>
