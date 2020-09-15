@@ -32,7 +32,7 @@ function LoggedInView(props: IProps) {
         <li className="nav-item">
           <Link to={`/@${props.currentUser.username}`} className="nav-link">
             <img
-              src={props.currentUser.image}
+              src={props.currentUser.image || ''}
               className="user-pic"
               alt={props.currentUser.username}
             />

@@ -2,7 +2,7 @@ import React from 'react'
 import { isNil } from 'ramda'
 
 type IProps = {
-  errors: { [key: string]: string } | undefined
+  errors: { [key: string]: string[] | undefined } | undefined
 }
 
 export function ListErrors({ errors }: IProps) {
