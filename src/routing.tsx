@@ -9,6 +9,7 @@ const Settings = lazy(() => import('pages/settings'))
 const Index = lazy(() => import('pages/index'))
 const About = lazy(() => import('pages/about'))
 const Login = lazy(() => import('pages/login'))
+const Register = lazy(() => import('pages/register'))
 
 export default function Routing() {
   return (
@@ -24,9 +25,9 @@ export default function Routing() {
             </AuthRoute>
           </Route>
 
-          <Route path="/signup">
+          <Route path="/register">
             <AuthRoute>
-              <div>Register</div>
+              <Register />
             </AuthRoute>
           </Route>
           <Route path="/about">

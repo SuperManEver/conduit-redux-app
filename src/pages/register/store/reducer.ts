@@ -8,7 +8,7 @@ import {
   disableProgress,
 } from './actions'
 
-const loginReducer = createReducer<IState>(
+const signupReducer = createReducer<IState>(
   {
     errors: {},
     progress: false,
@@ -30,4 +30,4 @@ const loginReducer = createReducer<IState>(
   }
 )
 
-export default loginReducer
+export default signupReducer
