@@ -2,8 +2,7 @@ import { path } from 'ramda'
 import { put, takeLatest } from 'redux-saga/effects'
 import { Action } from 'types'
 import { setUser } from 'services/session'
-
-import Api from '../api'
+import { TSignupParams } from './types'
 
 import {
   setErrors,
@@ -11,14 +10,17 @@ import {
   enableProgress,
   disableProgress,
 } from './actions'
-import { LOGIN } from './constants'
 
-function* login(action: Action<{ email: string; password: string }>) {
+import Api from '../api'
+
+import { SIGNUP } from './constants'
+
+function* signup(action: Action<TSignupParams>) {
   yield put(clearErrors())
   yield put(enableProgress())
 
   try {
-    const { user } = yield Api.login(action.payload)
+    const { user } = yield Api.signup(action.payload)
 
     yield put(setUser(user))
 
@@ -35,7 +37,7 @@ function* login(action: Action<{ email: string; password: string }>) {
 }
 
 function* mainSaga() {
-  yield takeLatest(LOGIN, login)
+  yield takeLatest(SIGNUP, signup)
 }
 
 export default mainSaga

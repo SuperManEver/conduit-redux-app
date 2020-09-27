@@ -9,7 +9,7 @@ import { RootState } from 'app/store'
 import { ListErrors } from 'components/ListErrors'
 import { Layout } from 'components/Layout'
 
-import { login, errorsSelector } from './store'
+import { login, errorsSelector, inProgress } from './store'
 
 import css from './styles.module.css'
 
@@ -21,6 +21,7 @@ type Values = {
 function Login() {
   const dispatch = useDispatch()
   const errors = useSelector((state: RootState) => errorsSelector(state))
+  const pending = useSelector(inProgress)
 
   const submitLogin = useCallback(
     (params: { email: string; password: string }) => dispatch(login(params)),
@@ -85,6 +86,7 @@ function Login() {
                       <button
                         className="btn btn-lg btn-primary pull-xs-right"
                         type="submit"
+                        disabled={pending}
                       >
                         Sign in
                       </button>
